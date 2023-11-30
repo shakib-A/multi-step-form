@@ -18,8 +18,11 @@ export default {
         'White': 'hsl(0, 0%, 100%)'
       },
       backgroundImage: {
-        'Desktop': "url('public/images/bg-sidebar-desktop.svg')",
-        'Mobile': "url('public/images/bg-sidebar-mobile.svg')"
+        'Desktop': "url('images/bg-sidebar-desktop.svg')",
+        'Mobile': "url('images/bg-sidebar-mobile.svg')",
+        'Arcade': "url('images/icon-arcade.svg')",
+        'Advanced': "url('images/icon-advanced.svg')",
+        'Pro': "url('images/icon-pro.svg')"
       }
     },
   },
