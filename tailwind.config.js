@@ -22,7 +22,8 @@ export default {
         'Mobile': "url('images/bg-sidebar-mobile.svg')",
         'Arcade': "url('images/icon-arcade.svg')",
         'Advanced': "url('images/icon-advanced.svg')",
-        'Pro': "url('images/icon-pro.svg')"
+        'Pro': "url('images/icon-pro.svg')",
+        'CheckBox': "url('images/icon-checkmark.svg')",
       }
     },
   },
