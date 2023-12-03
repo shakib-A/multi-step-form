@@ -12,7 +12,6 @@ const StepThree = ({ addOns, handleAddOnsChange }) => {
       </div>
 })
 
-console.log(addOns)
 
   return (
     <form className='flex flex-col'>

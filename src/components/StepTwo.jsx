@@ -1,12 +1,6 @@
 import React, { useState } from 'react'
 
-const StepTwo = ({ plan, selectPlan }) => {
-
-  const [monthly, setMonthly] = useState(true)
-
-  function handleRadioButton() {
-    setMonthly(!monthly)
-  }
+const StepTwo = ({ plan, selectPlan, monthly, handleRadioButton }) => {
 
   return (
     <div className='md:h-full md:flex md:flex-col'>

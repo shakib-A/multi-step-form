@@ -7,15 +7,16 @@ const App = () => {
 
   const [steps, setSteps] = useState([
     {active: false},
-    {active: false},
     {active: true},
+    {active: false},
     {active: false}
   ])
 
+  const [monthly, setMonthly] = useState(true)
 
   const [plan, setPlan] = useState({
-    planName: 'arcade',
-    cost: '$9/mo'
+    planName: '',
+    cost: ''
   })
 
   const [addOns, setAddOns] = useState([
@@ -71,6 +72,30 @@ const App = () => {
     ])
   }
 
+
+  function handleRadioButton() {
+    if(monthly) {
+      setMonthly(false)
+      setPlan(prev => {
+        let NewCost = prev.cost.replace('/mo', '0/yr')
+        return {
+          ...prev,
+          cost: NewCost
+        }
+      })
+    } else {
+      setMonthly(true)
+      setPlan(prev => {
+        let NewCost = prev.cost.replace('0/yr', '/mo')
+        return {
+          ...prev,
+          cost: NewCost
+        }
+      })
+    }
+  }
+  
+  
   function handleAddOnsChange(index) {
     let newAddOns = addOns.map((addOn, i) => {
       if(index === i) {
@@ -104,13 +129,17 @@ const App = () => {
           {steps[1].active && <StepTwo
              plan={plan}
              selectPlan={selectPlan}
+             monthly={monthly}
+             handleRadioButton={handleRadioButton}
           />}
           {steps[2].active && <StepThree
             addOns={addOns}
             handleAddOnsChange={handleAddOnsChange}
           />}
           {steps[3].active && <StepFour
-
+            plan={plan}
+            addOns={addOns}
+            monthly={monthly}
           />}
         </div>
           <Footer
@@ -134,13 +163,17 @@ const App = () => {
             {steps[1].active && <StepTwo
                plan={plan}
                selectPlan={selectPlan}
+               monthly={monthly}
+               handleRadioButton={handleRadioButton}
             />}
             {steps[2].active && <StepThree
               addOns={addOns}
               handleAddOnsChange={handleAddOnsChange}
             />}
             {steps[3].active && <StepFour
-
+              plan={plan}
+              addOns={addOns}
+              monthly={monthly}
             />}
             <Footer
               handleNextStep={handleNextStep}
