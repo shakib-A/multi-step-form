@@ -6,16 +6,38 @@ import Footer from './components/Footer'
 const App = () => {
 
   const [steps, setSteps] = useState([
+    {active: false},
+    {active: false},
     {active: true},
-    {active: false},
-    {active: false},
     {active: false}
   ])
+
 
   const [plan, setPlan] = useState({
     planName: 'arcade',
     cost: '$9/mo'
   })
+
+  const [addOns, setAddOns] = useState([
+    {
+      name: 'Online service',
+      description: 'Access to multiplayer games',
+      cost: '+$1/mo',
+      isChecked: false
+    },
+    {
+      name: 'Larger storage',
+      description: 'Extra 1TB of cloud save',
+      cost: '+$2/mo',
+      isChecked: false
+    },
+    {
+      name: 'Customizable Profile',
+      description: 'Custom theme on your Profile',
+      cost: '+$2/mo',
+      isChecked: false
+    },
+  ])
 
   function handleNextStep() {
     let activeIndex
@@ -49,6 +71,19 @@ const App = () => {
     ])
   }
 
+  function handleAddOnsChange(index) {
+    let newAddOns = addOns.map((addOn, i) => {
+      if(index === i) {
+        return {
+          ...addOn,
+          isChecked: !addOn.isChecked
+        }
+      }
+      return addOn
+    })
+    setAddOns(newAddOns)
+  }
+
   function selectPlan(myPlan, myCost) {
     setPlan({planName: myPlan, cost: myCost})
     console.log(plan)
@@ -71,7 +106,8 @@ const App = () => {
              selectPlan={selectPlan}
           />}
           {steps[2].active && <StepThree
-
+            addOns={addOns}
+            handleAddOnsChange={handleAddOnsChange}
           />}
           {steps[3].active && <StepFour
 
@@ -100,7 +136,8 @@ const App = () => {
                selectPlan={selectPlan}
             />}
             {steps[2].active && <StepThree
-
+              addOns={addOns}
+              handleAddOnsChange={handleAddOnsChange}
             />}
             {steps[3].active && <StepFour
 
