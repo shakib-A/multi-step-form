@@ -15,8 +15,8 @@ const App = () => {
   const [monthly, setMonthly] = useState(true)
 
   const [plan, setPlan] = useState({
-    planName: '',
-    cost: ''
+    planName: 'arcade',
+    cost: '9/mo'
   })
 
   const [addOns, setAddOns] = useState([
@@ -83,6 +83,13 @@ const App = () => {
           cost: NewCost
         }
       })
+
+      let newAddOns = addOns.map((addOn, index) => {
+        let newCost = addOn.cost.replace('/mo', '0/yr')
+        return {...addOn, cost: newCost}
+      })
+      setAddOns(newAddOns)
+
     } else {
       setMonthly(true)
       setPlan(prev => {
@@ -92,6 +99,13 @@ const App = () => {
           cost: NewCost
         }
       })
+
+      let newAddOns = addOns.map((addOn, index) => {
+        let newCost = addOn.cost.replace('0/yr', '/mo')
+        return {...addOn, cost: newCost}
+      })
+      setAddOns(newAddOns)
+
     }
   }
   
