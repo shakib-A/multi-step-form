@@ -4,10 +4,11 @@ import Navigation from './components/Navigation'
 import Footer from './components/Footer'
 
 const App = () => {
+  
 
   const [steps, setSteps] = useState([
-    {active: false},
     {active: true},
+    {active: false},
     {active: false},
     {active: false}
   ])
@@ -49,11 +50,16 @@ const App = () => {
       }
     }
     if(activeIndex === 3) {return}
-    setSteps(prev => [
-      ...prev,
-      steps[activeIndex + 1].active = true,
-      steps[activeIndex].active = false,
-    ])
+    
+    setSteps(steps.map((step, index) => {
+      if(index === activeIndex){
+        step.active = false
+        return step
+      } else if (index === activeIndex + 1) {
+        step.active = true
+        return step
+      } else {return step}
+    }))
   }
 
   function handleGoBack() {
@@ -65,11 +71,16 @@ const App = () => {
       }
     }
     if(activeIndex === 0) {return}
-    setSteps(prev => [
-      ...prev,
-      steps[activeIndex - 1].active = true,
-      steps[activeIndex].active = false,
-    ])
+
+    setSteps(steps.map((step, index) => {
+      if(index === activeIndex){
+        step.active = false
+        return step
+      } else if (index === activeIndex - 1) {
+        step.active = true
+        return step
+      } else {return step}
+    }))
   }
 
 
@@ -159,6 +170,7 @@ const App = () => {
           <Footer
             handleNextStep={handleNextStep}
             handleGoBack={handleGoBack}
+            steps={steps}
           />
       </div>
 
@@ -192,6 +204,7 @@ const App = () => {
             <Footer
               handleNextStep={handleNextStep}
               handleGoBack={handleGoBack}
+              steps={steps}
             />
           </div>
         </div>
