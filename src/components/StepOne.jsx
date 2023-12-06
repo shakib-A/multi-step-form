@@ -1,30 +1,49 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from "yup";
 
 const StepOne = () => {
 
-  const { register, handleSubmit, watch, formState: { errors } } = useForm();
-  console.log(watch("phone"));
+  const schema = yup.object({
+    name: yup.string().required(),
+    email: yup.string().email().required(),
+    phone: yup.number().required().typeError('please enter a valid phone number')
+  }).required();
+
+  const { register, handleSubmit, formState: { errors } } = useForm({
+    resolver: yupResolver(schema)
+  })
+
+  
+
   return (
-    <>
-      <form onSubmit={handleSubmit()} className='flex flex-col justify-center items-start'>
-        <h1 className='text-Marineblue font-bold text-2xl'>Personal Info</h1>
-        <p className='text-Coolgray'>Please provide your name, email address, and phone number.</p>
-        <label htmlFor="name" className='mt-5'>Name</label>
-        <input {...register("name",  {required: true})} type="text" id="name" name='name'  placeholder='e.g. Shakib Aghili' className={`${errors.phone ? 'border-2 border-Strawberryred outline-Strawberryred outline-2' : 'border-2'} p-2 rounded-md w-full`} />
-        {errors.name && <span className='text-Strawberryred text-sm'>This field is required</span>}
+    <form onSubmit={handleSubmit()} className='flex flex-col items-start md:h-full'>
+      <h1 className='text-Marineblue font-bold text-2xl'>Personal info</h1>
+      <p className='text-Coolgray'>please provide your name, email address, and phone number.</p>
+      <div className='flex justify-between items-center w-full mt-5'>
+        <label htmlFor="name" className='text-Marineblue font-bold'>name</label>
+        {errors.name && <span className='text-Strawberryred text-sm tracking-tighter'>{errors.name.message}</span>}
+      </div>
+      <input {...register('name')} type="text" id="name" className={`${errors.name ? 'focus:outline-Strawberryred border-Strawberryred' : 'border-2 outline-none'} border-2 border-black w-full p-2 rounded-md`} />
 
-        <label htmlFor="email" className='mt-5'>Email</label>
-        <input {...register("email", {required: true})} type="email" id="email" name='email' placeholder='e.g. example@gmail.com' className={`${errors.phone ? 'border-2 border-Strawberryred outline-Strawberryred outline-2' : 'border-2'} p-2 rounded-md w-full`} />
-        {errors.email && <span className='text-Strawberryred text-sm'>This field is required</span>}
+      <div className='flex justify-between items-center w-full mt-5'>
+        <label htmlFor="email" className='text-Marineblue font-bold'>Email Address</label>
+        {errors.email && <span className='text-Strawberryred text-sm tracking-tighter'>{errors.email.message}</span>}
+      </div>
+      <input {...register('email')} type="text" id="email" className={`${errors.email ? 'focus:outline-Strawberryred border-Strawberryred' : 'border-2 outline-none'} border-2 border-black w-full p-2 rounded-md`} />
 
-        <label htmlFor="phone" className='mt-5'>Phone Number</label>
-        <input {...register("phone", { required: true })} type="text" id="phone" name='phone' placeholder='e.g. +1 234 567 890' className={`${errors.phone ? 'border-2 border-Strawberryred outline-Strawberryred outline-2' : 'border-2'} p-2 rounded-md w-full`} />
-        {errors.phone && <span className='text-Strawberryred text-sm'>This field is required</span>}
+      <div className='flex justify-between items-center w-full mt-5'>
+        <label htmlFor="phone" className='text-Marineblue font-bold'>Phone Number</label>
+        {errors.phone && <span className='text-Strawberryred text-sm tracking-tighter'>{errors.phone.message}</span>}
+      </div>
+      <input {...register('phone')} type="text" id="phone" className={`${errors.phone ? 'focus:outline-Strawberryred border-Strawberryred' : 'border-2 outline-none'} border-2 border-black w-full p-2 rounded-md`} />
 
-        <input type="submit" name="" id="" />
-      </form>
-    </>
+      <div className='absolute left-0 bottom-0 w-full flex justify-between bg-White p-5 md:relative md:mt-auto md:pr-0'>
+        <input type="button" value='go back'/>
+        <input type="submit" value='next step' className='bg-Marineblue text-White p-4 rounded-xl capitalize font-bold'/>
+      </div>
+    </form>
   )
 }
 
