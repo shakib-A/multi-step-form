@@ -3,6 +3,8 @@ import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
+import Footer from './Footer'
+
 const StepOne = () => {
 
   const schema = yup.object({
@@ -39,10 +41,7 @@ const StepOne = () => {
       </div>
       <input {...register('phone')} type="text" id="phone" className={`${errors.phone ? 'focus:outline-Strawberryred border-Strawberryred' : 'border-2 outline-none'} border-2 border-black w-full p-2 rounded-md`} />
 
-      <div className='absolute left-0 bottom-0 w-full flex justify-between bg-White p-5 md:relative md:mt-auto md:pr-0'>
-        <input type="button" value='go back'/>
-        <input type="submit" value='next step' className='bg-Marineblue text-White p-4 rounded-xl capitalize font-bold'/>
-      </div>
+      <Footer />
     </form>
   )
 }
