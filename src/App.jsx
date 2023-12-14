@@ -30,6 +30,30 @@ const App = () => {
 
   const [isMonthly, setIsMonthly] = useState(true)
 
+  const [addOns, setAddOns] = useState([
+    {
+      id: 0,
+      isChecked: true,
+      name:'Online sevice',
+      description: 'Access to multiplayer games',
+      price: '+$1/mo'
+    },
+    {
+      id: 1,
+      isChecked: true,
+      name:'Larger storage',
+      description: 'Extra 1TB of cloud save',
+      price: '+$2/mo'
+    },
+    {
+      id: 2,
+      isChecked: true,
+      name:'Customizable profile',
+      description: 'Custom theme on your profile',
+      price: '+$2/mo'
+    },
+  ])
+
   function handleSelectPlan(id) {
     const newPlans = plans.map((plan, index) => {
       if(index === id) {
@@ -43,9 +67,37 @@ const App = () => {
     setPlans(newPlans)
   }
 
+  function handleSelectAddOn(id) {
+    let newAddOns = addOns.map((addOn, index) => {
+      if(index === id){
+        return {
+          ...addOn,
+          isChecked: !addOn.isChecked
+        } 
+      } else return addOn
+    })
+    setAddOns(newAddOns)
+  }
+
   function handleChangeMonthly() {
+    if(isMonthly) {
+      let newPlans = plans.map((plan) => {
+        return {
+          ...plan,
+          price: plan.price.replace('/mo', '0/yr') 
+        }
+      })
+      setPlans(newPlans)
+    } else {
+      let newPlans = plans.map((plan) => {
+        return {
+          ...plan,
+          price: plan.price.replace('0/yr', '/mo') 
+        }
+      })
+      setPlans(newPlans)
+    }
     setIsMonthly(!isMonthly)
-    //TODO: change the plan costs in plans state
   }
 
 
@@ -54,14 +106,21 @@ const App = () => {
         <Navigation />
       <div className='md:flex md:flex-col justify-start items-center md:h-full'>
         {/* <StepOne /> */}
-        <StepTwo
+        {/* <StepTwo
           plans={plans}
           handleSelectPlan={handleSelectPlan}
           isMonthly={isMonthly}
           handleChangeMonthly={handleChangeMonthly}
+        /> */}
+        {/* <StepThree 
+          addOns={addOns}
+          handleSelectAddOn={handleSelectAddOn}
+        /> */}
+        <StepFour
+          plans={plans}
+          addOns={addOns}
+          isMonthly={isMonthly}
         />
-        {/* <StepThree />
-        <StepFour /> */}
       </div>
     </div>
   )

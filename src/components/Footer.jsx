@@ -1,6 +1,9 @@
 import React from 'react'
 
 const Footer = () => {
+
+  //TODO: add footer functionality
+
   return (
     <div className='absolute left-0 bottom-0 w-full flex justify-between bg-White p-5 md:relative md:mt-auto md:pr-0'>
         <input type="button" value='go back'/>
