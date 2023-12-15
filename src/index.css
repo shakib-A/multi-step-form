@@ -1,5 +1,11 @@
 
+@tailwind base;
+@tailwind utilities;
+@tailwind components;
+
+
 html {
+  font-family: 'Open Sans', sans-serif;
   font-family: 'Ubuntu', sans-serif;
   font-size: 16px;
   background-color: hsl(206, 94%, 87%);
@@ -15,8 +21,3 @@ html {
     align-items: start;
   }
  }
-
-
-@tailwind base;
-@tailwind utilities;
-@tailwind components;

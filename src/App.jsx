@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { StepOne, StepTwo, StepThree, StepFour } from './components/steps'
 import Navigation from './components/Navigation'
+import Thanks from './components/Thanks'
 
 const App = () => {
 
@@ -33,25 +34,48 @@ const App = () => {
   const [addOns, setAddOns] = useState([
     {
       id: 0,
-      isChecked: true,
+      isChecked: false,
       name:'Online sevice',
       description: 'Access to multiplayer games',
       price: '+$1/mo'
     },
     {
       id: 1,
-      isChecked: true,
+      isChecked: false,
       name:'Larger storage',
       description: 'Extra 1TB of cloud save',
       price: '+$2/mo'
     },
     {
       id: 2,
-      isChecked: true,
+      isChecked: false,
       name:'Customizable profile',
       description: 'Custom theme on your profile',
       price: '+$2/mo'
     },
+  ])
+
+  const [activePage, setActivePage] = useState([
+    {
+      id:0,
+      isActive: true
+    },
+    {
+      id:1,
+      isActive: false
+    },
+    {
+      id:2,
+      isActive: false
+    },
+    {
+      id:3,
+      isActive: false
+    },
+    {
+      id:4,
+      isActive: false
+    }
   ])
 
   function handleSelectPlan(id) {
@@ -87,6 +111,15 @@ const App = () => {
           price: plan.price.replace('/mo', '0/yr') 
         }
       })
+
+      let newAddOns = addOns.map((addOn) => {
+        return {
+          ...addOn,
+          price: addOn.price.replace('/mo', '0/yr')
+        }
+      })
+
+      setAddOns(newAddOns)
       setPlans(newPlans)
     } else {
       let newPlans = plans.map((plan) => {
@@ -95,32 +128,78 @@ const App = () => {
           price: plan.price.replace('0/yr', '/mo') 
         }
       })
+
+      let newAddOns = addOns.map((addOn) => {
+        return {
+          ...addOn,
+          price: addOn.price.replace('0/yr', '/mo')
+        }
+      })
+      setAddOns(newAddOns)
       setPlans(newPlans)
     }
     setIsMonthly(!isMonthly)
   }
 
+  function handleNextStep(id) {
+    if(id === 4){return}
+    let newActivePage = activePage.map((page, index) => {
+      if(page.isActive) {
+        return {...page, isActive: false}
+      } else return page
+    })
+    newActivePage[id + 1].isActive = true
+    setActivePage(newActivePage)
+  }
+  
+  function handleGoBack(id) {
+    if(id === 0){return}
+    let newActivePage = activePage.map((page, index) => {
+      if(page.isActive) {
+        return {...page, isActive: false}
+      } else return page
+    })
+    newActivePage[id - 1].isActive = true
+    setActivePage(newActivePage)
+  }
+
 
   return (
-    <div className='flex flex-col justify-center items-center md:flex-row md:justify-start md:items-start bg-White top-0 mt-10 md:mt-0 md:h-[650px] md:w-[830px] md:p-3 md:pr-0 md:rounded-xl p-4 rounded-xl'>
-        <Navigation />
+    <div className='flex flex-col justify-center items-center md:flex-row md:justify-start md:items-start bg-White top-0 mt-32 md:mt-0 md:h-[650px] md:w-[830px] md:p-3 md:pr-0 md:rounded-xl p-4 rounded-xl'>
+        <Navigation
+          activePage={activePage}
+        />
       <div className='md:flex md:flex-col justify-start items-center md:h-full'>
-        {/* <StepOne /> */}
-        {/* <StepTwo
+        {activePage[0].isActive && <StepOne
+          activePage={activePage}
+          handleNextStep={handleNextStep}
+          handleGoBack={handleGoBack}
+        />}
+        {activePage[1].isActive && <StepTwo
           plans={plans}
           handleSelectPlan={handleSelectPlan}
           isMonthly={isMonthly}
           handleChangeMonthly={handleChangeMonthly}
-        /> */}
-        {/* <StepThree 
+          activePage={activePage}
+          handleNextStep={handleNextStep}
+          handleGoBack={handleGoBack}
+        />}
+        {activePage[2].isActive && <StepThree 
           addOns={addOns}
           handleSelectAddOn={handleSelectAddOn}
-        /> */}
-        <StepFour
+          activePage={activePage}
+          handleNextStep={handleNextStep}
+          handleGoBack={handleGoBack}
+        />}
+        {activePage[3].isActive && <StepFour
           plans={plans}
           addOns={addOns}
           isMonthly={isMonthly}
-        />
+          activePage={activePage}
+          handleNextStep={handleNextStep}
+          handleGoBack={handleGoBack}
+        />}
+        {activePage[4].isActive && <Thanks />}
       </div>
     </div>
   )

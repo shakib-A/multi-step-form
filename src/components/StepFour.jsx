@@ -1,7 +1,7 @@
 import React from 'react'
 import Footer from './Footer'
 
-const StepFour = ({ plans, addOns, isMonthly }) => {
+const StepFour = ({ plans, addOns, isMonthly, activePage, handleNextStep, handleGoBack }) => {
 
   const selectedPlan = plans.filter((plan) => {
     if(plan.isSelected) {
@@ -47,7 +47,12 @@ const StepFour = ({ plans, addOns, isMonthly }) => {
         <div className='flex justify-between items-center border-b-[1px] mb-2 pb-2'>
           <div>
             <h1 className='text-Marineblue font-bold'>{`${selectedPlan[0].planName} (${isMonthly ? 'monthly' : 'yearly'})`}</h1>
-            <input type="button" value="Change" className='text-Coolgray underline' />
+            <input 
+              //this will set the second page as active page
+              onClick={() => handleNextStep(0)} 
+              type="button" 
+              value="Change" 
+              className='text-Coolgray underline cursor-pointer' />
           </div>
           <h1 className='text-Marineblue font-extrabold'>{selectedPlan[0].price}</h1>
         </div>
@@ -60,7 +65,11 @@ const StepFour = ({ plans, addOns, isMonthly }) => {
         </div>
 
       </section>
-      <Footer />
+      <Footer
+        activePage={activePage}
+        handleNextStep={handleNextStep}
+        handleGoBack={handleGoBack}
+      />
     </div>
   )
 }
