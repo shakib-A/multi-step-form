@@ -23,7 +23,7 @@ export default {
         'Arcade': "url('images/icon-arcade.svg')",
         'Advanced': "url('images/icon-advanced.svg')",
         'Pro': "url('images/icon-pro.svg')",
-        'CheckBox': "url('images/icon-checkmark.svg')",
+        'Thanks': "url('images/icon-thank-you.svg')",
       }
     },
   },
