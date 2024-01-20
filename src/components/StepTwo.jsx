@@ -3,11 +3,11 @@ import Card from './Card'
 import Footer from './Footer'
 import Radio from './Radio'
 
-const StepTwo = ({ plans, handleSelectPlan, isMonthly, handleChangeMonthly, activePage, handleNextStep, handleGoBack }) => {
+const StepTwo = ({ plans, handleSelectPlan }) => {
 
   const cards = plans.map((plan, index) => {
     return <Card 
-      key={index}
+      key={index} // number of cards is static which is 3.
       planId={plan.id}
       planIcon={plan.icon}
       planName={plan.planName}
@@ -25,15 +25,8 @@ const StepTwo = ({ plans, handleSelectPlan, isMonthly, handleChangeMonthly, acti
         {cards}
       </div>
 
-      <Radio
-        isMonthly={isMonthly}
-        handleChangeMonthly={handleChangeMonthly}
-      />
-      <Footer
-        activePage={activePage}
-        handleNextStep={handleNextStep}
-        handleGoBack={handleGoBack}
-      />
+      <Radio />
+      <Footer/>
     </div>
   )
 }

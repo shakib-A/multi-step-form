@@ -1,7 +1,7 @@
 import React from 'react'
 import Footer from './Footer'
 
-const StepThree = ({ addOns, handleSelectAddOn, activePage, handleNextStep, handleGoBack }) => {
+const StepThree = ({ addOns, handleSelectAddOn }) => {
 
   const addOnsList = addOns.map((addOn, index) => {
     return (
@@ -22,11 +22,7 @@ const StepThree = ({ addOns, handleSelectAddOn, activePage, handleNextStep, hand
       <h1 className='text-Marineblue font-bold text-2xl'>Pick add-ons</h1>
       <h1 className='text-Coolgray'>Add-ons help enhance your gaming experience.</h1>
       {addOnsList}
-      <Footer
-        activePage={activePage}
-        handleNextStep={handleNextStep}
-        handleGoBack={handleGoBack}
-      />
+      <Footer/>
     </div>
   )
 }

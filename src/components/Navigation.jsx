@@ -6,7 +6,6 @@ const Navigation = ({ activePage }) => {
     if(page.isActive) return true
   })
 
-  console.log(active[0].id)
 
   return (
     <div className='absolute top-0 bg-Mobile w-screen h-full bg-contain bg-no-repeat -z-10 md:bg-Desktop md:w-[40%] md:h-full md:bg-contain md:z-0 md:relative'>

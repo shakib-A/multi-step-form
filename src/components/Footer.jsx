@@ -1,6 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { footerContext } from '../App'
 
-const Footer = ({ activePage, handleNextStep, handleGoBack }) => {
+const Footer = () => {
+
+  const { activePage, handleNextStep, handleGoBack } = useContext(footerContext)
 
   let activeId = activePage.filter((page) => {
     if(page.isActive) {

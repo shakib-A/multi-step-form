@@ -1,11 +1,14 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
 
 import Footer from './Footer'
+import { footerContext } from '../App';
 
-const StepOne = ({ activePage, handleNextStep, handleGoBack }) => {
+const StepOne = () => {
+
+  const { handleNextStep } = useContext(footerContext)
 
   const schema = yup.object({
     name: yup.string().required(),
@@ -44,11 +47,7 @@ const StepOne = ({ activePage, handleNextStep, handleGoBack }) => {
       </div>
       <input {...register('phone')} type="text" id="phone" placeholder='e.g. +1 234 567 890' className={`${errors.phone ? 'focus:outline-Strawberryred border-2 border-Strawberryred' : 'border-2 outline-none'} w-full p-2 rounded-md`} />
 
-      <Footer 
-        activePage={activePage}
-        handleNextStep={handleNextStep}
-        handleGoBack={handleGoBack}
-      />
+      <Footer />
     </form>
   )
 }

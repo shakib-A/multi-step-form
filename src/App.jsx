@@ -1,7 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, createContext } from 'react'
 import { StepOne, StepTwo, StepThree, StepFour } from './components/steps'
 import Navigation from './components/Navigation'
 import Thanks from './components/Thanks'
+
+export const radioContext = createContext()
+export const footerContext = createContext()
 
 const App = () => {
 
@@ -58,11 +61,11 @@ const App = () => {
   const [activePage, setActivePage] = useState([
     {
       id:0,
-      isActive: true
+      isActive: false
     },
     {
       id:1,
-      isActive: false
+      isActive: true
     },
     {
       id:2,
@@ -170,35 +173,28 @@ const App = () => {
           activePage={activePage}
         />
       <div className='md:flex md:flex-col justify-start items-center md:h-full'>
-        {activePage[0].isActive && <StepOne
-          activePage={activePage}
-          handleNextStep={handleNextStep}
-          handleGoBack={handleGoBack}
-        />}
-        {activePage[1].isActive && <StepTwo
-          plans={plans}
-          handleSelectPlan={handleSelectPlan}
-          isMonthly={isMonthly}
-          handleChangeMonthly={handleChangeMonthly}
-          activePage={activePage}
-          handleNextStep={handleNextStep}
-          handleGoBack={handleGoBack}
-        />}
-        {activePage[2].isActive && <StepThree 
-          addOns={addOns}
-          handleSelectAddOn={handleSelectAddOn}
-          activePage={activePage}
-          handleNextStep={handleNextStep}
-          handleGoBack={handleGoBack}
-        />}
-        {activePage[3].isActive && <StepFour
-          plans={plans}
-          addOns={addOns}
-          isMonthly={isMonthly}
-          activePage={activePage}
-          handleNextStep={handleNextStep}
-          handleGoBack={handleGoBack}
-        />}
+        <footerContext.Provider value={{ activePage, handleNextStep, handleGoBack}}>
+          {activePage[0].isActive && <StepOne />}
+
+          <radioContext.Provider value={ {isMonthly, handleChangeMonthly} }>
+            {activePage[1].isActive && 
+            <StepTwo
+            plans={plans}
+            handleSelectPlan={handleSelectPlan}
+            />
+          }
+          </radioContext.Provider>
+
+          {activePage[2].isActive && <StepThree 
+            addOns={addOns}
+            handleSelectAddOn={handleSelectAddOn}
+             />}
+          {activePage[3].isActive && <StepFour
+            plans={plans}
+            addOns={addOns}
+            isMonthly={isMonthly}
+            />}
+        </footerContext.Provider>
         {activePage[4].isActive && <Thanks />}
       </div>
     </div>

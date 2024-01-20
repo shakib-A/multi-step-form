@@ -1,6 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { radioContext } from '../App'
 
-const Radio = ({ isMonthly, handleChangeMonthly }) => {
+const Radio = () => {
+
+  const { isMonthly,handleChangeMonthly } = useContext(radioContext)
+
   return (
     <div 
     onClick={handleChangeMonthly}

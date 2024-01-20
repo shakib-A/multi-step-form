@@ -1,7 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Footer from './Footer'
+import { footerContext } from '../App'
 
-const StepFour = ({ plans, addOns, isMonthly, activePage, handleNextStep, handleGoBack }) => {
+const StepFour = ({ plans, addOns, isMonthly }) => {
+
+  const { handleNextStep } = useContext(footerContext)
 
   const selectedPlan = plans.filter((plan) => {
     if(plan.isSelected) {
@@ -65,11 +68,7 @@ const StepFour = ({ plans, addOns, isMonthly, activePage, handleNextStep, handle
         </div>
 
       </section>
-      <Footer
-        activePage={activePage}
-        handleNextStep={handleNextStep}
-        handleGoBack={handleGoBack}
-      />
+      <Footer />
     </div>
   )
 }
