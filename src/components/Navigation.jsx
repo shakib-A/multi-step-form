@@ -1,58 +1,49 @@
-import React from 'react'
+import React from "react";
+import { useLocation } from "react-router-dom";
 
-const Navigation = ({ activePage }) => {
+const Navigation = () => {
 
-  let active = activePage.filter((page) => {
-    if(page.isActive) return true
-  })
-
+  const myLocation = useLocation()
 
   return (
-    <div className='absolute top-0 bg-Mobile w-screen h-full bg-contain bg-no-repeat -z-10 md:bg-Desktop md:w-[40%] md:h-full md:bg-contain md:z-0 md:relative'>
-      {/* mobile design */}
-      <div className='flex justify-center mt-10 gap-4 md:hidden'>
-        <div className={`${active[0].id === 0 ? 'bg-Lightblue text-black' : 'text-Lightblue'} w-8 h-8 border-2 border-Lightblue rounded-full flex justify-center items-center `}>1</div>
-        <div className={`${active[0].id === 1 ? 'bg-Lightblue text-black' : 'text-Lightblue'} w-8 h-8 border-2 border-Lightblue rounded-full flex justify-center items-center `}>2</div>
-        <div className={`${active[0].id === 2 ? 'bg-Lightblue text-black' : 'text-Lightblue'} w-8 h-8 border-2 border-Lightblue rounded-full flex justify-center items-center `}>3</div>
-        <div className={`${active[0].id === 3 ? 'bg-Lightblue text-black' : 'text-Lightblue'} w-8 h-8 border-2 border-Lightblue rounded-full flex justify-center items-center `}>4</div>
-      </div>
+    <div className="bg-Mobile bg-no-repeat bg-center bg-cover h-[150px] w-screen sm:w-auto sm:bg-inherit sm:h-full sm:rounded-md">
+      <nav className="flex gap-2 absolute top-10 left-[50%] translate-x-[-50%]
+      sm:flex-col sm:gap-5 sm:justify-start sm:items-start sm:static sm:pl-5 sm:pt-5 sm:translate-x-0 sm:translate-y-0 sm:h-full sm:inset-auto sm:w-[250px] sm:rounded-lg sm:bg-Desktop sm:bg-cover sm:bg-no-repeat sm:bg-center">
 
-      {/* desktop design */}
-      <div className='hidden md:flex flex-col justify-start gap-8 pt-10 pl-10'>
-        <div className='flex justify- gap-4'>
-          <div className={`${active[0].id === 0 ? 'bg-Lightblue text-black' : 'text-Lightblue'} w-8 h-8 border-2 border-Lightblue rounded-full flex justify-center items-center`}>1</div>
-          <div className='flex flex-col leading-none'>
-            <h1 className='text-Coolgray uppercase'>step 1</h1>
-            <h1 className='text-White uppercase font-bold tracking-wider'>your info</h1>
+        <div className="flex justify-center items-center gap-2 leading-5 tracking-widest uppercase text-sm text-white">
+          <div className={`flex justify-center items-center w-8 h-8 rounded-full border-4 border-Lightblue  ${myLocation.pathname === '/' ? 'text-black bg-Lightblue' : 'text-Lightblue'}`}>1</div>
+          <div className="hidden sm:block">
+            <h2 className="text-xs font-light text-Lightblue">step 1</h2>
+            <h2 className="font-thin">your info</h2>
           </div>
         </div>
 
-        <div className='flex justify- gap-4'>
-          <div className={`${active[0].id === 1 ? 'bg-Lightblue text-black' : 'text-Lightblue'} w-8 h-8 border-2 border-Lightblue rounded-full flex justify-center items-center`}>2</div>
-          <div className='flex flex-col leading-none'>
-            <h1 className='text-Coolgray uppercase'>step 2</h1>
-            <h1 className='text-White uppercase font-bold tracking-wider'>select plan</h1>
+        <div className="flex justify-center items-center gap-2 leading-5 tracking-widest uppercase text-sm text-white">
+          <div className={`flex justify-center items-center w-8 h-8 rounded-full border-4 border-Lightblue ${myLocation.pathname === '/stepTwo' ? 'text-black bg-Lightblue' : 'text-Lightblue'}`}>2</div>
+          <div className="hidden sm:block">
+            <h2 className="text-xs font-light text-Lightblue">step 2</h2>
+            <h2 className="font-thin">select plans</h2>
           </div>
         </div>
 
-        <div className='flex justify- gap-4'>
-          <div className={`${active[0].id === 2 ? 'bg-Lightblue text-black' : 'text-Lightblue'} w-8 h-8 border-2 border-Lightblue rounded-full flex justify-center items-center`}>3</div>
-          <div className='flex flex-col leading-none'>
-            <h1 className='text-Coolgray uppercase'>step 3</h1>
-            <h1 className='text-White uppercase font-bold tracking-wider'>add-ons</h1>
+        <div className="flex justify-center items-center gap-2 leading-5 tracking-widest uppercase text-sm text-white">
+          <div className={`flex justify-center items-center w-8 h-8 rounded-full border-4 border-Lightblue ${myLocation.pathname === '/stepThree' ? 'text-black bg-Lightblue' : 'text-Lightblue'}`}>3</div>
+          <div className="hidden sm:block">
+            <h2 className="text-xs font-light text-Lightblue">step 3</h2>
+            <h2 className="font-thin">add-ons</h2>
           </div>
         </div>
 
-        <div className='flex justify- gap-4'>
-          <div className={`${active[0].id === 3  ? 'bg-Lightblue text-black' : 'text-Lightblue'} w-8 h-8 border-2 border-Lightblue rounded-full flex justify-center items-center `}>4</div>
-          <div className='flex flex-col leading-none'>
-            <h1 className='text-Coolgray uppercase'>step 4</h1>
-            <h1 className='text-White uppercase font-bold tracking-wider'>summary</h1>
+        <div className="flex justify-center items-center gap-2 leading-5 tracking-widest uppercase text-sm text-white">
+          <div className={`flex justify-center items-center w-8 h-8 rounded-full border-4 border-Lightblue ${myLocation.pathname === '/stepFour' ? 'text-black bg-Lightblue' : 'text-Lightblue'}`}>4</div>
+          <div className="hidden sm:block">
+            <h2 className="text-xs font-light text-Lightblue">step 4</h2>
+            <h2 className="font-thin">summary</h2>
           </div>
         </div>
-      </div>
+      </nav>
     </div>
-  )
-}
+  );
+};
 
-export default Navigation
+export default Navigation;

@@ -1,23 +1,27 @@
-
 @tailwind base;
-@tailwind utilities;
 @tailwind components;
+@tailwind utilities;
 
+@font-face {
+  font-family: 'Ubuntu';
+  src: url('assets/fonts/Ubuntu-Medium.ttf');
+}
 
-html {
-  font-family: 'Open Sans', sans-serif;
-  font-family: 'Ubuntu', sans-serif;
-  font-size: 16px;
+* {
+  font-family: 'Ubuntu';
+}
+
+html{
   background-color: hsl(206, 94%, 87%);
   height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   position: relative;
 }
 
-@media (max-width: 768px) { 
-  html {
-    align-items: start;
+@media (min-width: 640px) { 
+  :root{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
   }
- }
+}

@@ -1,54 +1,72 @@
 import React, { useContext } from 'react'
 import { useForm } from 'react-hook-form'
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from "yup";
-
-import Footer from './Footer'
-import { footerContext } from '../App';
+import { useNavigate } from 'react-router-dom'
+import { myContext } from '../myContext/myContext'
 
 const StepOne = () => {
 
-  const { handleNextStep } = useContext(footerContext)
-
-  const schema = yup.object({
-    name: yup.string().required(),
-    email: yup.string().email().required(),
-    phone: yup.number().required().typeError('please enter a valid phone number')
-  }).required();
-
-  const { register, handleSubmit, formState: { errors } } = useForm({
-    resolver: yupResolver(schema)
+  const { state, dispatch } = useContext(myContext)
+  const navigate = useNavigate()
+  const { register, handleSubmit, getValues, formState: { errors } } = useForm({
+    defaultValues: state.stepOneValues
   })
 
+
   const onSubmit = () => {
-    console.log('sumbited')
-    handleNextStep(0)
+    dispatch({ 
+    type: 'UPDATE_FIRST_FORM',
+    payload: getValues()
+  })
+    navigate('/stepTwo')
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col items-start md:h-full'>
-      <h1 className='text-Marineblue font-bold text-2xl'>Personal info</h1>
-      <p className='text-Coolgray'>please provide your name, email address, and phone number.</p>
-      <div className='flex justify-between items-center w-full mt-5'>
-        <label htmlFor="name" className='text-Marineblue font-bold'>name</label>
-        {errors.name && <span className='text-Strawberryred text-sm tracking-tighter'>{errors.name.message}</span>}
-      </div>
-      <input {...register('name')} type="text" id="name" placeholder='e.g. Stephan Kink' className={`${errors.name ? 'focus:outline-Strawberryred border-2 border-Strawberryred' : 'border-2 outline-none'} w-full p-2 rounded-md`} />
+    <>
+    <div className='absolute w-[400px] bg-white top-24 left-[50%] translate-x-[-50%] flex flex-col rounded-lg p-2 drop-shadow-xlsm:static sm:inset-auto sm:translate-x-0 sm:flex-1 sm:flex sm:justify-start sm:self-start sm:drop-shadow-none sm:static sm:h-full'>
+      <h1 className='mt-2 font-bold text-xl text-Marineblue'>Personal info</h1> 
+      <p className='mt-1 mb-2 text-sm text-Coolgray'>Please provide your name, email<br className='sm:hidden'/> and phone number.</p>
+      <form className='flex flex-col  h-full'>
+        <div className='flex justify-between items-end'>
+          <label htmlFor="name">Name</label>
+          <p className='text-[12px] text-Strawberryred'>{errors.name?.message}</p>
+        </div>
+        <input type="text" id='name' className= {`border-2 ${errors.name ? 'border-Strawberryred' : 'border-Lightgray'} outline-none px-2 mb-2 rounded-md text-md`}
+         {...register('name', { required: 'this field is required'})} />
 
-      <div className='flex justify-between items-center w-full mt-5'>
-        <label htmlFor="email" className='text-Marineblue font-bold'>Email Address</label>
-        {errors.email && <span className='text-Strawberryred text-sm tracking-tighter'>{errors.email.message}</span>}
-      </div>
-      <input {...register('email')} type="text" id="email" placeholder='e.g. stephanking@lorem.com' className={`${errors.email ? 'focus:outline-Strawberryred border-2 border-Strawberryred' : 'border-2 outline-none'} w-full p-2 rounded-md`} />
+        <div className='flex justify-between items-end'>
+          <label htmlFor="email">Email Address</label>
+          <p className='text-[12px] text-Strawberryred'>{errors.email?.message}</p>
+        </div>
+        <input type="email" id='email' className= {`border-2 ${errors.email ? 'border-Strawberryred' : 'border-Lightgray'} outline-none px-2 mb-2 rounded-md text-md`}
+         {...register('email', {
+          required: 'this field is required',
+          pattern: {
+            value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+            message: 'Invalid format'
+          }
+          })} />
 
-      <div className='flex justify-between items-center w-full mt-5'>
-        <label htmlFor="phone" className='text-Marineblue font-bold'>Phone Number</label>
-        {errors.phone && <span className='text-Strawberryred text-sm tracking-tighter'>{errors.phone.message}</span>}
-      </div>
-      <input {...register('phone')} type="text" id="phone" placeholder='e.g. +1 234 567 890' className={`${errors.phone ? 'focus:outline-Strawberryred border-2 border-Strawberryred' : 'border-2 outline-none'} w-full p-2 rounded-md`} />
-
-      <Footer />
-    </form>
+        <div className='flex justify-between items-end'>
+          <label htmlFor="phone">Phone Number</label>
+          <p className='text-[12px] text-Strawberryred'>{errors.phone?.message}</p>
+        </div>
+        <input type="text" id='phone' className= {`border-2 ${errors.phone ? 'border-Strawberryred' : 'border-Lightgray'} outline-none px-2 mb-2 rounded-md text-md`}
+         {...register('phone', {
+          required: 'this field is required',
+          pattern: {
+            value: /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/i,
+            message: 'Invalid Phone Number format'
+          }
+          })} />
+        {/* submit button for desktop design */}
+        <button onClick={handleSubmit(onSubmit)} className='hidden bg-Marineblue text-white px-2 py-2 rounded-md sm:block absolute bottom-3 right-3'>Next Step</button>
+      </form>
+    </div>
+    {/* submit button for mobile design */}
+    <div className='absolute bottom-0 bg-white w-screen flex justify-end px-2 py-4 sm:hidden'>
+      <button onClick={handleSubmit(onSubmit)} className='bg-Marineblue text-white px-2 py-2 rounded-md'>Next Step</button>
+    </div>
+  </>
   )
 }
 

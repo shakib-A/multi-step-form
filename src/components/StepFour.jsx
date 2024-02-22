@@ -1,75 +1,71 @@
 import React, { useContext } from 'react'
-import Footer from './Footer'
-import { footerContext } from '../App'
+import { useNavigate } from 'react-router-dom'
+import { myContext } from '../myContext/myContext'
+import { addOnsList, plansList } from '.'
 
-const StepFour = ({ plans, addOns, isMonthly }) => {
+const StepFour = () => {
 
-  const { handleNextStep } = useContext(footerContext)
+  const navigate = useNavigate()
+  const { state: { stepTwoValues: { planName, isMonthly }, stepThreeValues: { addOns } } ,dispatch } = useContext(myContext)
+  
+  const selectedAddOns = addOnsList.filter((element) => addOns.includes(element.title))
+  const selectedPlan = plansList.find((element) => element.planName === planName)
 
-  const selectedPlan = plans.filter((plan) => {
-    if(plan.isSelected) {
-      return plan
+  const calculateTotal = () => {
+    let total = 0
+    if(isMonthly){
+      total += selectedPlan.planPrice
+      for (let i = 0; i < selectedAddOns.length; i++) {
+        total += selectedAddOns[i].price
+      }
+      return total
     }
-  })
-
-  const selectedAddOns = addOns.filter((addOn) => {
-    if(addOn.isChecked) {
-      return addOn
+     else {
+      total += selectedPlan.planPrice
+      for (let i = 0; i < selectedAddOns.length; i++) {
+        total += selectedAddOns[i].price
+      }
+      return total * 10
     }
-  })
-
-  const addOnsCost = selectedAddOns.map((addOn, index) => {
-    return (
-      <div key={index} className='flex justify-between mt-2'>
-          <h1 className='text-Coolgray'>{addOn.name}</h1>
-          <h1 className='text-Marineblue font-bold text-md'>{addOn.price}</h1>
-        </div>
-    )
-  })
-
-  const totalCost = () => {
-    let number = /\d+/g
-    let planCost = parseInt(selectedPlan[0].price.match(number)[0])
-    let addOnsTotalCost = selectedAddOns.map((addOn) => {
-      return parseInt(addOn.price.match(number)[0])
-    })
-
-    let addOnsTotalCostSum = 0
-    for(let i = 0; i < addOnsTotalCost.length; i++) {
-      addOnsTotalCostSum += addOnsTotalCost[i]
-    }
-    
-    return addOnsTotalCostSum + planCost
   }
 
   return (
-    <div className='flex flex-col md:h-full md:w-[29rem]'>
-      <h1 className='text-Marineblue font-bold text-2xl'>Finishing up</h1>
-      <h1 className='text-Coolgray'>Double-check everything looks OK begore confirming.</h1>
-      <section className='flex flex-col md:h-full md:bg-Lightblue md:bg-opacity-30 rounded-sm p-2 mt-2'>
-        <div className='flex justify-between items-center border-b-[1px] mb-2 pb-2'>
+    <>
+    <div className='absolute w-[400px] bg-white top-24 left-[50%] translate-x-[-50%] flex flex-col rounded-lg p-2 drop-shadow-xlsm:static sm:inset-auto sm:translate-x-0 sm:flex-1 sm:flex sm:justify-start sm:self-start sm:drop-shadow-none sm:static sm:h-full'>
+      <h1 className='mt-2 font-bold text-xl text-Marineblue'>Finishing up</h1> 
+      <p className='mt-1 mb-2 text-sm text-Coolgray'>Double-check everythinkg looks OK<br className='sm:hidden'/>before confirming.</p>
+
+      <div className='flex flex-col gap-2 bg-Lightblue bg-opacity-35 p-2 rounded-md'>
+         
+        <div className='flex justify-start items-center border-b-2 pb-2'>
           <div>
-            <h1 className='text-Marineblue font-bold'>{`${selectedPlan[0].planName} (${isMonthly ? 'monthly' : 'yearly'})`}</h1>
-            <input 
-              //this will set the second page as active page
-              onClick={() => handleNextStep(0)} 
-              type="button" 
-              value="Change" 
-              className='text-Coolgray underline cursor-pointer' />
+            <h2>{`${planName} (${isMonthly ? 'Monthly' : 'Yearly' })`}</h2>
+            <button onClick={() => navigate('/')} className='text-Coolgray underline hover:text-black'>change</button>
           </div>
-          <h1 className='text-Marineblue font-extrabold'>{selectedPlan[0].price}</h1>
+          <h2 className='flex-grow text-right'>{isMonthly ? `$${selectedPlan.planPrice}/mo` : `$${selectedPlan.planPriceYearly}/yr`}</h2>
         </div>
 
-        {addOnsCost}
+        {selectedAddOns?.map((addOn, index) => {
+            return <div key={index} className='flex justify-start items-center text-Coolgray'>
+            <h2 className='capitalize'>{addOn.title}</h2>
+            <h2 className='flex-grow text-right'>{isMonthly ? `+$${addOn.price}/mo` : `+$${addOn.price*10}/yr`}</h2>
+          </div>
+        })}
 
-        <div className='flex justify-between mt-8'>
-          <h1 className='text-Coolgray'>{`Total (${isMonthly ? 'per month' : 'per year'})`}</h1>
-          <h1 className='text-Purplishblue font-extrabold'>{`+$${totalCost()}${isMonthly ? '/mo' : '/yr'}`}</h1>
+        <div className='flex justify-start items-center mt-4'>
+          <h2 className=' text-Coolgray'>{`Total (per ${isMonthly ? 'Month' : 'Year'})`}</h2>
+          <h2 className='flex-grow text-right text-Purplishblue font-bold'>{`+$${calculateTotal()}/${isMonthly ? 'mo' : 'yr'}`}</h2>
         </div>
-
-      </section>
-      <Footer />
+        
+        <button  onClick={() => navigate('/stepThree')} className='hidden px-2 py-2 rounded-md sm:block absolute bottom-3 left-3'>go back</button>
+        <button  onClick={() => navigate('/thanks')} className='hidden bg-Marineblue text-white px-2 py-2 rounded-md sm:block absolute bottom-3 right-3'>Confirm</button>
+      </div>
     </div>
+      <div className='absolute bottom-0 bg-white w-screen flex justify-between px-2 py-4 sm:hidden'>
+        <button onClick={() => navigate('/stepThree')}>go back</button>
+        <button onClick={() => navigate('/thanks')} className='bg-Marineblue text-white px-2 py-2 rounded-md'>Confirm</button>
+    </div>
+    </>
   )
 }
 

@@ -1,7 +1,8 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    './src/**/*.{jsx,js,ts,tsx}'
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {
@@ -18,12 +19,12 @@ export default {
         'White': 'hsl(0, 0%, 100%)'
       },
       backgroundImage: {
-        'Desktop': "url('images/bg-sidebar-desktop.svg')",
-        'Mobile': "url('images/bg-sidebar-mobile.svg')",
-        'Arcade': "url('images/icon-arcade.svg')",
-        'Advanced': "url('images/icon-advanced.svg')",
-        'Pro': "url('images/icon-pro.svg')",
-        'Thanks': "url('images/icon-thank-you.svg')",
+        'Desktop': "url('./assets/images/bg-sidebar-desktop.svg')",
+        'Mobile': "url('./assets/images/bg-sidebar-mobile.svg')",
+        'Arcade': "url('./assets/images/icon-arcade.svg')",
+        'Advanced': "url('./assets/images/icon-advanced.svg')",
+        'Pro': "url('./assets/images/icon-pro.svg')",
+        'Thanks': "url('./assets/images/icon-thank-you.svg')",
       }
     },
   },
