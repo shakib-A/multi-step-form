@@ -1,6 +1,6 @@
 # Multi Step Form
 
-hello everyone 👋. this is little project I had fun building it. there some intresting challenges along the way but they were worth it :wink: <br/>
+hello everyone 👋. this is little project I had fun building it. there were some intresting challenges along the way but they were worth it :wink: <br/>
 if you want to practice: <br/>
 1. form validation <br/>
 2. state management <br/>
