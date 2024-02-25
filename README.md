@@ -1,8 +1,21 @@
-# React + Vite
+# Multi Step Form
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+hello everyone 👋. this is little project I had fun building it. there some intresting challenges along the way but they were worth it :wink: <br/>
+if you want to practice: <br/>
+1. form validation <br/>
+2. state management <br/>
+3. routing <br/>
+4. understanding controlled vs uncontrolled components <br/>
+this is the right project to dive in. happy coding.
 
-Currently, two official plugins are available:
+## Tecnologies used to create this little fun project:
+- react
+- vite
+- react-router-dom
+- react hook form
+- react hooks
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+  this is a little preview of the complited project. you can see it live at the link below: <br/>
+  https://multstepform.netlify.app/
+
+![multi step form](https://github.com/shakib-A/multi-step-form/assets/61932431/045dc359-28be-4b4a-be79-4bd3589b4cf9)
